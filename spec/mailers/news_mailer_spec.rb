@@ -28,11 +28,13 @@ module Newsletter
 
     context "for newsletter with tag" do
       let(:newsletter) {FactoryGirl.create(:newsletter, tag_list:"abc")}
+      before{newsletter}
+
       it {
-        newsletter
         expect(NewsMailer.last_mail_with_tag("abc", double(email:"t@t.com")).subject)
           .to eq newsletter.subject
       }
+
     end
 
   end
