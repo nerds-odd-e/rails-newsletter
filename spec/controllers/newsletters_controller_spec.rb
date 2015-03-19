@@ -186,6 +186,13 @@ module Newsletter
           put :update, {:id => newsletter.to_param, :newsletter => valid_attributes}, valid_session
           expect(response).to redirect_to(newsletter)
         end
+
+        it "will keep the form if preview" do
+          newsletter = Newsletter.create! valid_attributes
+          put :update, {:id => newsletter.to_param, :newsletter => valid_attributes, preview:true}, valid_session
+          expect(response).to render_template("new")
+        end
+
       end
 
       describe "with invalid params" do

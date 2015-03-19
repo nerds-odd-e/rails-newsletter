@@ -32,36 +32,14 @@ class Newsletter::NewslettersController < ApplicationController
   # POST /newsletters
   def create
     @newsletter = Newsletter::Newsletter.new(newsletter_params)
-    if @newsletter.valid?
-      if params[:preview]
-        Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
-        flash[:notice] = "Preview email has been sent. Please check your mailbox."
-        return render :new
-      end
-      if params[:send_groups]
-        count = @newsletter.groups.reject {|x| x.empty?}.collect do |gp|
-          Newsletter.user_class.group(gp)
-        end.flatten.in_groups_of(10, false).collect do |subgroup|
-          subgroup.each do |user|
-            Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
-          end.count
-        end.reduce do |sum, e|
-          sleep 10.0
-          sum + e
-        end || 0
-        flash[:notice] = "#{count} emails sent."
-        return render :new
-      end
-    end
-    @newsletter.save
-    respond_with(@newsletter)
+    newsletter_action
   end
 
 
   # PATCH/PUT /newsletters/1
   def update
-    @newsletter.update(newsletter_params)
-    respond_with(@newsletter)
+    @newsletter.assign_attributes(newsletter_params)
+    newsletter_action
   end
 
   # DELETE /newsletters/1
@@ -87,4 +65,32 @@ class Newsletter::NewslettersController < ApplicationController
 
   def set_locale
   end
+
+  # POST /newsletters
+  def newsletter_action
+    if @newsletter.valid?
+      if params[:preview]
+        Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
+        flash[:notice] = "Preview email has been sent. Please check your mailbox."
+        return render :new
+      end
+      if params[:send_groups]
+        count = @newsletter.groups.reject {|x| x.empty?}.collect do |gp|
+          Newsletter.user_class.group(gp)
+        end.flatten.in_groups_of(10, false).collect do |subgroup|
+          subgroup.each do |user|
+            Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
+          end.count
+        end.reduce do |sum, e|
+          sleep 10.0
+          sum + e
+        end || 0
+        flash[:notice] = "#{count} emails sent."
+        return render :new
+      end
+    end
+    @newsletter.save
+    respond_with(@newsletter)
+  end
+
 end
