@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    errors:
+      models:
+        "newsletter/newsletter":
+          attributes:
+            subject:
+              blank: "cannot be blank"

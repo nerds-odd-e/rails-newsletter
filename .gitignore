@@ -1,0 +1,33 @@
+_site
+.idea
+*.iml
+*.ipr
+*.swp
+*.swo
+.sass-cache
+*.DS_*
+*.pstore
+jekyll/css/ie.css
+jekyll/css/print.css
+jekyll/css/screen.css
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+**/db/*.sqlite3
+**/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+**/log/*.log
+**/tmp
+
+# Ignore IDE files
+/.idea
+webtest/results/
+public/system/
+public/ckeditor_assets/
+public/assets/
+config/initializers/password.rb
+jekyll/.jekyll-metadata

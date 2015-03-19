@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Subject:
+  = @newsletter.subject
+%p
+  %b Body:
+  = @newsletter.body
+
+= link_to 'Edit', Newsletter::Engine.routes.url_helpers.edit_newsletter_path(@newsletter)
+\|
+= link_to 'Back', Newsletter::Engine.routes.url_helpers.newsletters_path
