@@ -10,6 +10,12 @@ class Newsletter::NewslettersController < ApplicationController
     @newsletters = Newsletter::Newsletter.all
   end
 
+  def tag
+    @tag = params[:tag_id]
+    @newsletters = Newsletter::Newsletter.tagged_with(@tag)
+    render "index"
+  end
+
   # GET /newsletters/1
   def show
   end
@@ -72,7 +78,7 @@ class Newsletter::NewslettersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def newsletter_params
-    params.require(:newsletter).permit(:subject, :body, :groups=>[])
+    params.require(:newsletter).permit(:subject, :body, :tag_list, :groups=>[])
   end
 
   def user

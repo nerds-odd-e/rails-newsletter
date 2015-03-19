@@ -2,3 +2,15 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+ul.newsletter-tags {
+  list-style: none;
+}
+
+ul.newsletter-tags li {
+  display: inline-block;
+}
+
+ul.newsletter-tags li:not(:first-child)::before {
+  content: "|\00a0";
+}
+

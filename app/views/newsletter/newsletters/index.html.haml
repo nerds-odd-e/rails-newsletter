@@ -1,10 +1,14 @@
 %h1 Listing newsletters
 
-%table
+-if @tag
+  %p
+    %b With Tag:
+    = @tag
+%table.table
   %thead
     %tr
       %th Subject
-      %th Body
+      %th Tags
       %th
       %th
       %th
@@ -13,7 +17,7 @@
     - @newsletters.each do |newsletter|
       %tr
         %td= newsletter.subject
-        %td= newsletter.body
+        %td= render partial:"tags", locals:{tag_list:newsletter.tag_list}
         %td= link_to 'Show', newsletter
         %td= link_to 'Edit', edit_newsletter_path(newsletter)
         %td= link_to 'Destroy', newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }

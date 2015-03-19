@@ -25,6 +25,20 @@ module Newsletter
       end
     end
 
+    describe "GET index" do
+      let(:newsletter) {Newsletter.create! valid_attributes.merge({tag_list:"tag1, tag2"})}
+      before {newsletter}
+      it "filters the tag" do
+        get :tag, {tag_id:"abc"}, valid_session
+        expect(assigns(:newsletters)).to eq([])
+      end
+
+      it "show newsletter with the tag" do
+        get :tag, {tag_id:"tag2"}, valid_session
+        expect(assigns(:newsletters)).to eq([newsletter])
+      end
+    end
+
     describe "GET show" do
       it "assigns the requested newsletter as @newsletter" do
         newsletter = Newsletter.create! valid_attributes
@@ -56,6 +70,11 @@ module Newsletter
           expect {
             post :create, {:newsletter => valid_attributes}, valid_session
           }.to change(Newsletter, :count).by(1)
+        end
+
+        it "add tags to the newsletter" do
+          post :create, {:newsletter => valid_attributes.merge({tag_list:"a b,c"})}, valid_session
+          expect(assigns(:newsletter).tag_list).to eq ["a b", "c"]
         end
 
         it "assigns a newly created newsletter as @newsletter" do

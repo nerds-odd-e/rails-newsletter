@@ -3,6 +3,11 @@
 %p
   %b Subject:
   = @newsletter.subject
+
+%p
+  %b Tags:
+  = render partial:"tags", locals:{tag_list:@newsletter.tag_list}
+
 %p
   %b Body:
   = @newsletter.body
