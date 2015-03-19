@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails-i18n'
   s.add_dependency 'i18n'
   s.add_dependency 'ckeditor'
+  s.add_dependency 'acts-as-taggable-on'
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency 'rspec-rails'

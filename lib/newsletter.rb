@@ -1,4 +1,5 @@
 require "simple_form"
+require "acts-as-taggable-on"
 require "newsletter/engine"
 
 module Newsletter
