@@ -21,6 +21,11 @@ module Newsletter
       expect(subject.body.to_s).to include "t@t.com"
     end
 
+    it "renders missing placeholder" do
+      newsletter.body = "{{missing_content}}"
+      expect(subject.body.to_s).to include "**Missing content '{{missing_content}}'**"
+    end
+
     it "render placeholder in subject" do
       newsletter.subject = "{{email}}"
       expect(subject.subject.to_s).to include "t@t.com"
