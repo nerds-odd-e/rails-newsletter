@@ -15,6 +15,26 @@ module Newsletter
       newsletter.body = "<strong>Sin!</strong>"
       expect(subject.body.to_s).to include newsletter.body
     end
+
+    it "render placeholder" do
+      newsletter.body = "{{email}}"
+      expect(subject.body.to_s).to include "t@t.com"
+    end
+
+    it "render placeholder in subject" do
+      newsletter.subject = "{{email}}"
+      expect(subject.subject.to_s).to include "t@t.com"
+    end
+
+    context "for newsletter with tag" do
+      let(:newsletter) {FactoryGirl.create(:newsletter, tag_list:"abc")}
+      it {
+        newsletter
+        expect(NewsMailer.last_mail_with_tag("abc", double(email:"t@t.com")).subject)
+          .to eq newsletter.subject
+      }
+    end
+
   end
 
 end

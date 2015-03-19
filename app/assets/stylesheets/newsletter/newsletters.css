@@ -4,6 +4,7 @@
 */
 ul.newsletter-tags {
   list-style: none;
+  padding:0;
 }
 
 ul.newsletter-tags li {

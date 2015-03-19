@@ -10,6 +10,7 @@ gem 'ckeditor'
 group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails', :require => false
+  gem "letter_opener"
 end
 
 # Declare any dependencies that are still in development here instead of in
