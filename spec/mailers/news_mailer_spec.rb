@@ -36,8 +36,8 @@ module Newsletter
       }
 
       it {
-        expect(NewsMailer.last_mail_with_tag("not_exist", double(email:"t@t.com")).subject)
-          .to be nil
+        expect{NewsMailer.last_mail_with_tag("not_exist", double(email:"t@t.com")).subject}
+          .to raise_error
       }
 
     end
