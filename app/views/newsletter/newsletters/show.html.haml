@@ -10,7 +10,7 @@
 
 %p
   %b Body:
-  = @newsletter.body
+  %div=raw @newsletter.body
 
 = link_to 'Edit', Newsletter::Engine.routes.url_helpers.edit_newsletter_path(@newsletter)
 \|
