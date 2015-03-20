@@ -1,5 +1,5 @@
 -content_for :email do
-  =@contactable.email
+  =@contactable and @contactable.email
 =render "newsletter/news_mailer/extra_definitions"
 =raw body.gsub(/\{\{([\w\d_]+)\}\}/){|match| content_for(match[/\{\{([\w\d_]+)\}\}/, 1].to_sym) || "**Missing content '#{match}'**"}
 
