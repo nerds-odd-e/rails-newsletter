@@ -32,16 +32,16 @@ module Newsletter
     end
 
     context "for newsletter with tag" do
-      let(:newsletter) {FactoryGirl.create(:newsletter, tag_list:"abc")}
+      let(:newsletter) {FactoryGirl.create(:newsletter, tag_list:"abc,system")}
       before{newsletter}
 
       it {
-        expect(NewsMailer.last_mail_with_tag("abc", double(email:"t@t.com")).subject)
+        expect(NewsMailer.system_mail_with_tag("abc", double(email:"t@t.com")).subject)
           .to eq newsletter.subject
       }
 
       it {
-        expect{NewsMailer.last_mail_with_tag("not_exist", double(email:"t@t.com")).subject}
+        expect{NewsMailer.system_mail_with_tag("not_exist", double(email:"t@t.com")).subject}
           .to raise_error
       }
 
