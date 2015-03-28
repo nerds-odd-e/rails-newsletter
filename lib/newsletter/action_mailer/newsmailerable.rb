@@ -21,29 +21,11 @@ module Newsletter
     def system_mail_with_tag(tag, email, default = nil)
       newsletter = ::Newsletter::Newsletter.tagged_with([tag,"system"]).last || default
       raise "No newsletter with the tag '#{tag}, please add it." if not newsletter
-      mail_from_template(email, newsletter.subject, newsletter.body)
+      mail_from_template(email, newsletter)
     end
 
-    def mail_from_template(email, subject, body)
-      mail(to: email, subject: template_render(subject).strip, body:template_render(body))
-    end
-
-    def template_render(raw)
-      recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
-      re = /([\w\d_]+)(\s*)(.*)/
-      raw.gsub(recursor){|match|
-        match = match[recursor, 1].strip
-        mail_content_for(match[re, 1].to_sym, match[re, 3])}
-    end
-
-    def mail_content_for(content, arg)
-      return "**Missing content '{{#{content}}}'**" if !::Newsletter::MailerTemplateHelper.public_instance_methods.include? content
-      result = send(content)
-      if result and !arg.empty?
-        template_render(arg)
-      else
-        result
-      end
+    def mail_from_template(email, newsletter)
+      mail(to: email, subject: newsletter.render_subject(self), body:newsletter.render_body(self))
     end
 
   end
@@ -55,5 +37,6 @@ module Newsletter
     end
 
   end
+
 end
 

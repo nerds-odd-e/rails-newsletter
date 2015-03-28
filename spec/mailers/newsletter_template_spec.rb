@@ -3,8 +3,8 @@ require "rails_helper"
 class MailerForTest < ActionMailer::Base
   enable_mailer_template
   default from: "me"
-  def test_mail(body)
-    mail_from_template("fake@n.com", "subject", body)
+  def test_mail(newsletter)
+    mail_from_template("fake@n.com", newsletter)
   end
 
 end
@@ -13,7 +13,9 @@ module Newsletter
   RSpec.describe "newsmailerize", :type => :mailer do
 
     let(:newsletter) {FactoryGirl.build(:newsletter)}
-    subject{MailerForTest.test_mail(@body).body.to_s}
+    subject{
+      newsletter.body = @body
+      MailerForTest.test_mail(newsletter).body.to_s}
 
     it {@body = "abc"
         is_expected.to eq "abc"}

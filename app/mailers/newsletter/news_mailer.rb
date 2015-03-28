@@ -4,7 +4,7 @@ class Newsletter::NewsMailer < ActionMailer::Base
 
   def news_mail(newsletter, user)
     @contactable = user
-    mail_from_template(user.email, newsletter.subject, newsletter.body)
+    mail_from_template(user.email, newsletter)
   end
 
 end
