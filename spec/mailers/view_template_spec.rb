@@ -14,7 +14,7 @@ module Newsletter
     it {@body = "{{content}}"
         expect(view).to receive(:respond_to?).with(:content) {false}
         expect(view).to receive(:try).with(:content_for?, :content) {false}
-        is_expected.to eq "**Missing content '{{content}}'**"}
+        expect{subject}.to raise_error}
 
     it {@body = "{{content}}"
         expect(view).to receive(:respond_to?).with(:content) {false}

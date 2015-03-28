@@ -22,7 +22,7 @@ module Newsletter
         is_expected.to eq "abc"}
 
     it {@body = "{{not_exist}}"
-        is_expected.to eq "**Missing content '{{not_exist}}'**"}
+        expect{subject}.to raise_error}
 
     context "given there is a content helper" do
       before {

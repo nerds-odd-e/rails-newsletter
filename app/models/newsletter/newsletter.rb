@@ -31,7 +31,7 @@ class Newsletter::Newsletter < ActiveRecord::Base
       if env.try(:content_for?, content)
         result = env.content_for(content)
       else
-        return "**Missing content '{{#{content}}}'**"
+        raise "**Missing content '{{#{content}}}'**"
       end
     end
     if result and !arg.empty?

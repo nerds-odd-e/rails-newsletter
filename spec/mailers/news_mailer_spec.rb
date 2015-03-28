@@ -23,7 +23,7 @@ module Newsletter
 
     it "renders missing placeholder" do
       newsletter.body = "{{missing_content}}"
-      expect(subject.body.to_s).to include "**Missing content '{{missing_content}}'**"
+      expect{subject.body.to_s}.to raise_error
     end
 
     it "render placeholder in subject" do
