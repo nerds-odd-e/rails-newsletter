@@ -1,4 +1,5 @@
 class Newsletter::NewsMailer < ActionMailer::Base
+  layout "mail"
   enable_mailer_template
   default from: "Newsletter"
 
