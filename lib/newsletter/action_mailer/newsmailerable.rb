@@ -25,7 +25,7 @@ module Newsletter
     end
 
     def mail_from_template(email, newsletter)
-      mail(to: email, subject: newsletter.render_subject(self), body:render(text:newsletter.render_body(self), layout:true).strip)
+      mail(to: email, subject: newsletter.render_subject(self), body:render(html:newsletter.render_body(self).html_safe, layout:true).strip)
     end
 
   end
