@@ -42,6 +42,10 @@ module Newsletter
         @body = "{{new_content This is {{new_content}}}}"
         is_expected.to eq "This is default"}
 
+      it {
+        @body = "{{new_content I can still use {this} in my content}}"
+        is_expected.to eq "I can still use {this} in my content"}
+
     end
 
     context "given there is a content helper returns nil" do

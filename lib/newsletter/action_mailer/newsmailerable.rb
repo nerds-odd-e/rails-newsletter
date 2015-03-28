@@ -29,7 +29,7 @@ module Newsletter
     end
 
     def template_render(raw)
-      recursor = /\{\{((?:[^{}]++|\{\{\g<1>\}\})++)\}\}/
+      recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
       re = /([\w\d_]+)(\s*)(.*)/
       raw.gsub(recursor){|match|
         match = match[recursor, 1].strip
