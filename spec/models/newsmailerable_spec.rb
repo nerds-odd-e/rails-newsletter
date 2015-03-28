@@ -1,7 +1,7 @@
 require "rails_helper"
 
 class TestMailer < ActionMailer::Base
-  newsmailerize
+  enable_mailer_template
   default from: "Newsletter"
 
   def test_mail

@@ -1,11 +1,10 @@
 class Newsletter::NewsMailer < ActionMailer::Base
-  newsmailerize
+  enable_mailer_template
   default from: "Newsletter"
 
   def news_mail(newsletter, user)
-    @newsletter = newsletter
     @contactable = user
-    newsletter_mail(user.email, newsletter)
+    mail_from_template(user.email, newsletter.subject, newsletter.body)
   end
 
 end
