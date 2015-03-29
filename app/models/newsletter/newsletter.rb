@@ -18,15 +18,10 @@ class Newsletter::Newsletter < ActiveRecord::Base
   private
   def template_render(raw, env)
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
-    re = /^\s*([\w\d_]+)(\s(.*))?$/
+    re = /^\s*([\w\d_]+)((?:\s|(?:\&nbsp\;))?(.*))?$/
     raw.gsub(recursor){|match|
       match = match[recursor, 1]
-      if match[re, 1]
-        mail_content_for(match[re, 1].to_sym, match[re, 3], env)
-      else
-        match
-      end
-    }
+      mail_content_for(match[re, 1].to_sym, match[re, 3], env)}
   end
 
   def mail_content_for(content, arg, env)
