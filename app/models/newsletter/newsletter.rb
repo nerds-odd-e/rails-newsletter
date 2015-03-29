@@ -18,10 +18,15 @@ class Newsletter::Newsletter < ActiveRecord::Base
   private
   def template_render(raw, env)
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
-    re = /([\w\d_]+)(\s*)(.*)/
+    re = /^\s*([\w\d_]+)(\s(.*))?$/
     raw.gsub(recursor){|match|
-      match = match[recursor, 1].strip
-      mail_content_for(match[re, 1].to_sym, match[re, 3], env)}
+      match = match[recursor, 1]
+      if match[re, 1]
+        mail_content_for(match[re, 1].to_sym, match[re, 3], env)
+      else
+        match
+      end
+    }
   end
 
   def mail_content_for(content, arg, env)
@@ -34,7 +39,7 @@ class Newsletter::Newsletter < ActiveRecord::Base
         raise "**Missing content '{{#{content}}}'**"
       end
     end
-    if result and !arg.empty?
+    if result and !arg.blank?
       template_render(arg, env)
     else
       result
