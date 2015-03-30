@@ -65,6 +65,10 @@ module Newsletter
         @body = "{{new_content I can still use {this} in my content}}"
         is_expected.to eq "I can still use {this} in my content\n"}
 
+      it {
+        @body = "{{not new_content arg}}"
+        is_expected.to eq ""}
+
     end
 
     context "given there is a content helper returns nil" do

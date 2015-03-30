@@ -37,7 +37,7 @@ class Newsletter::Newsletter < ActiveRecord::Base
     if (result.nil? ^ _not.nil?) and !arg.blank?
       template_render(arg, env)
     else
-      result
+      result if _not.nil?
     end
   end
 
