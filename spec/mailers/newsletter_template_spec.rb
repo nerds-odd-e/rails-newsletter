@@ -34,6 +34,10 @@ module Newsletter
         is_expected.to eq "default\n"}
 
       it {
+        @body = "{{new_content?}}"
+        is_expected.to eq "default\n"}
+
+      it {
         @body = "{{  new_content  }}"
         is_expected.to eq "default\n"}
 
