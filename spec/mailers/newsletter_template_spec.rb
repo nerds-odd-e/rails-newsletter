@@ -75,6 +75,11 @@ module Newsletter
       it {
         @body = "{{new_content arg}}"
         is_expected.to eq ""}
+
+      it {
+        @body = "{{not new_content arg}}"
+        is_expected.to eq "arg\n"}
+
     end
 
   end
