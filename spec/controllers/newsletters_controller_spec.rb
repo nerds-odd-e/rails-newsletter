@@ -164,16 +164,6 @@ module Newsletter
 
     describe "PUT update" do
       describe "with valid params" do
-        let(:new_attributes) {
-          skip("Add a hash of attributes valid for your model")
-        }
-
-        it "updates the requested newsletter" do
-          newsletter = Newsletter.create! valid_attributes
-          put :update, {:id => newsletter.to_param, :newsletter => new_attributes}, valid_session
-          newsletter.reload
-          skip("Add assertions for updated state")
-        end
 
         it "assigns the requested newsletter as @newsletter" do
           newsletter = Newsletter.create! valid_attributes

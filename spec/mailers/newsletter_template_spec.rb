@@ -10,6 +10,14 @@ class MailerForTest < ActionMailer::Base
 
 end
 
+module MyKeywords
+  def new_content
+    "default"
+  end
+  def empty_content
+  end
+end
+
 module Newsletter
   RSpec.describe "newsmailerize", :type => :mailer do
 
@@ -26,7 +34,7 @@ module Newsletter
 
     context "given there is a content helper" do
       before {
-        MailerTemplateHelper.send(:define_method, "new_content") {"default"}
+        MailerForTest.load_keywords(MyKeywords)
       }
 
       it {
@@ -72,16 +80,13 @@ module Newsletter
     end
 
     context "given there is a content helper returns nil" do
-      before {
-        MailerTemplateHelper.send(:define_method, "new_content") {}
-      }
 
       it {
-        @body = "{{new_content arg}}"
+        @body = "{{empty_content arg}}"
         is_expected.to eq ""}
 
       it {
-        @body = "{{not new_content arg}}"
+        @body = "{{not empty_content arg}}"
         is_expected.to eq "arg\n"}
 
     end

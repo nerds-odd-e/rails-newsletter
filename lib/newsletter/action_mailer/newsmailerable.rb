@@ -10,7 +10,10 @@ module Newsletter
       module ClassMethods
         def enable_mailer_template
           include ::Newsletter::MailerTemplatable
-          include ::Newsletter::MailerTemplateHelper
+        end
+
+        def load_keywords(m)
+          include m
         end
       end
     end
