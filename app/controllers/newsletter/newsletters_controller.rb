@@ -75,16 +75,14 @@ class Newsletter::NewslettersController < ApplicationController
         return render :new
       end
       if params[:send_groups]
-        count = @newsletter.groups.reject {|x| x.empty?}.collect do |gp|
+        count = 0
+        @newsletter.groups.reject {|x| x.empty?}.collect do |gp|
           Newsletter.user_class.group(gp)
-        end.flatten.in_groups_of(10, false).collect do |subgroup|
-          subgroup.each do |user|
-            Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
-          end.count
-        end.reduce do |sum, e|
-          sleep 10.0
-          sum + e
-        end || 0
+        end.flatten.each do |user|
+          count += 1
+          sleep(10.0) if count % 10 == 0
+          Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
+        end
         flash[:notice] = "#{count} emails sent."
         return render :new
       end
