@@ -22,7 +22,7 @@ module Newsletter
   module MailerTemplatable
 
     def system_mail_with_tag(tag, email, default = nil)
-      newsletter = ::Newsletter::Newsletter.with_system_tag(tag).last || default
+      newsletter = ::Newsletter::Newsletter.tagged_with(tag).last || default
       raise "No newsletter with the tag '#{tag}, please add it." if not newsletter
       mail_from_template(email, newsletter)
     end

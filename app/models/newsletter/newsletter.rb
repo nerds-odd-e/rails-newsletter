@@ -3,9 +3,6 @@ class Newsletter::Newsletter < ActiveRecord::Base
   validates :subject, :body, :presence => true
   acts_as_taggable
   attr_accessor :groups
-  scope :with_system_tag, ->(tag) {
-    tagged_with([tag,"system"])
-  }
 
   def render_subject(env)
     template_render(subject, env).strip
