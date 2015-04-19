@@ -80,7 +80,6 @@ class Newsletter::NewslettersController < ApplicationController
           Newsletter.user_class.group(gp)
         end.flatten.each do |user|
           count += 1
-          sleep(10.0) if count % 10 == 0
           Newsletter::NewsMailer.news_mail(@newsletter, user).deliver_now
         end
         flash[:notice] = "#{count} emails sent."

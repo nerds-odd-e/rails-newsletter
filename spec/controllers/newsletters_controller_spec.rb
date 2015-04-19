@@ -141,7 +141,6 @@ module Newsletter
       it "will send email to selected groups" do
         user = double
         mail = double
-        expect(controller).not_to receive(:sleep)
         expect(mail).to receive(:deliver_now).once
         allow(::Newsletter.user_class).to receive(:group).with("users") {[user]}
         allow(NewsMailer).to receive(:news_mail) {mail}
@@ -155,7 +154,6 @@ module Newsletter
         allow(mail).to receive(:deliver_now)
         allow(::Newsletter.user_class).to receive(:group).with("users") {[user] * 11}
         expect(NewsMailer).to receive(:news_mail).exactly(11).times {mail}
-        expect(controller).to receive(:sleep).with(10.0)
         post :create, {:newsletter => valid_attributes.merge({groups:["users", ""]}), send_groups:true}, valid_session
         expect(flash[:notice]).to include "11 emails sent."
       end
