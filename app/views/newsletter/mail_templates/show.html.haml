@@ -2,16 +2,16 @@
 
 %p
   %b Subject:
-  = @newsletter.subject
+  = @mail_template.subject
 
 %p
   %b Tags:
-  = render partial:"tags", locals:{tag_list:@newsletter.tag_list}
+  = render partial:"tags", locals:{tag_list:@mail_template.tag_list}
 
 %p
   %b Body:
-  %div=raw @newsletter.body
+  %div=raw @mail_template.body
 
-= link_to 'Edit', Newsletter::Engine.routes.url_helpers.edit_newsletter_path(@newsletter)
+= link_to 'Edit', Newsletter::Engine.routes.url_helpers.edit_mail_template_path(@mail_template)
 \|
-= link_to 'Back', Newsletter::Engine.routes.url_helpers.newsletters_path
+= link_to 'Back', Newsletter::Engine.routes.url_helpers.mail_templates_path
