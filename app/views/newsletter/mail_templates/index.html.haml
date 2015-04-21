@@ -1,4 +1,4 @@
-%h1 Listing newsletters
+%h1 Listing Mail Templates
 
 -if @tag
   %p
@@ -14,7 +14,7 @@
       %th
       
   %tbody
-    - @newsletters.sort_by{|n| n.tag_list}.each do |newsletter|
+    - @mail_templates.sort_by{|n| n.tag_list}.each do |newsletter|
       %tr
         %td= newsletter.subject
         %td= render partial:"tags", locals:{tag_list:newsletter.tag_list}
@@ -24,4 +24,4 @@
 
 %br
 
-= link_to 'New Newsletter', new_mail_template_path
+= link_to 'New Template', new_mail_template_path
