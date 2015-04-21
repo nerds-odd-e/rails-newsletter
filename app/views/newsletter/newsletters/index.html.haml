@@ -14,7 +14,7 @@
       %th
       
   %tbody
-    - @newsletters.order(:subject).each do |newsletter|
+    - @newsletters.sort_by{|n| n.tag_list}.each do |newsletter|
       %tr
         %td= newsletter.subject
         %td= render partial:"tags", locals:{tag_list:newsletter.tag_list}
