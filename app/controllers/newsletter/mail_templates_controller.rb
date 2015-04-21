@@ -48,6 +48,14 @@ class Newsletter::MailTemplatesController < ApplicationController
     respond_with(@mail_template)
   end
 
+  def method_missing(method, *args, &block)
+    if (method.to_s.end_with?('_path') || method.to_s.end_with?('_url')) && main_app.respond_to?(method)
+      main_app.send(method, *args)
+    else
+      super
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_newsletter
