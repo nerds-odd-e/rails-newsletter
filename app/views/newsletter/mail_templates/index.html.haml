@@ -19,7 +19,7 @@
         %td= newsletter.subject
         %td= render partial:"tags", locals:{tag_list:newsletter.tag_list}
         %td= link_to 'Show', newsletter
-        %td= link_to 'Edit', edit_newsletter_path(newsletter)
+        %td= link_to 'Edit', edit_mail_template_path(newsletter)
         %td= link_to 'Destroy', newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
