@@ -1,5 +1,5 @@
 Newsletter::Engine.routes.draw do
-  resources :newsletters
-  get "newsletters/tag/:tag_id"=>"newsletters#tag", as:"tagged"
+  resources :mail_templates
+  get "mail_templates/tag/:tag_id"=>"mail_templates#tag", as:"tagged"
 
 end

@@ -12,13 +12,13 @@ end
 
 RSpec.describe TestMailer, :type => :mailer do
 
-  let(:newsletter) {FactoryGirl.create(:newsletter, tag_list:"test_tag,system")}
-  before{newsletter}
+  let(:mail_template) {FactoryGirl.create(:mail_template, tag_list:"test_tag,system")}
+  before{mail_template}
 
-  context "for newsletter with tag" do
+  context "for mail_template with tag" do
     subject{TestMailer.test_mail}
 
-    it { expect(subject.subject) .to eq newsletter.subject }
+    it { expect(subject.subject) .to eq mail_template.subject }
 
   end
 

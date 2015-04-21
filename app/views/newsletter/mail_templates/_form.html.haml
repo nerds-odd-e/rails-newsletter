@@ -1,8 +1,8 @@
-= simple_form_for(@newsletter) do |f|
+= simple_form_for(@mail_template) do |f|
   = f.error_notification
   .form-inputs
     = f.input :subject
-    = f.input :tag_list, :input_html => {value: @newsletter.tag_list.join(", ")}
+    = f.input :tag_list, :input_html => {value: @mail_template.tag_list.join(", ")}
     = f.input :body, as:"ckeditor", :input_html => { :ckeditor => {:toolbar => 'full'} }
     = f.input :groups, as:"check_boxes", collection:Newsletter.user_class.categories
 

@@ -3,10 +3,10 @@ require "rails_helper"
 module Newsletter
   RSpec.describe "template from view" do
 
-    let(:newsletter) {FactoryGirl.build(:newsletter, body:@body)}
+    let(:mail_template) {FactoryGirl.build(:mail_template, body:@body)}
     let(:view) {double}
     subject{
-      newsletter.render_body view}
+      mail_template.render_body view}
 
     it {@body = "abc"
         is_expected.to eq "abc"}

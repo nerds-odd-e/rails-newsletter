@@ -1,4 +1,4 @@
-class Newsletter::Newsletter < ActiveRecord::Base
+class Newsletter::MailTemplate < ActiveRecord::Base
   include ::Newsletter::MailerTemplateHelper
   validates :subject, :body, :presence => true
   acts_as_taggable

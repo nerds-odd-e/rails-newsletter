@@ -22,13 +22,13 @@ module Newsletter
   module MailerTemplatable
 
     def system_mail_with_tag(tag, email, default = nil)
-      newsletter = ::Newsletter::Newsletter.tagged_with(tag).last || default
-      raise "No newsletter with the tag '#{tag}, please add it." if not newsletter
-      mail_from_template(email, newsletter)
+      mail_template = ::Newsletter::MailTemplate.tagged_with(tag).last || default
+      raise "No mail template with the tag '#{tag}, please add it." if not mail_template
+      mail_from_template(email, mail_template)
     end
 
-    def mail_from_template(email, newsletter)
-      mail(to: email, subject: newsletter.render_subject(self), body:render(html:newsletter.render_body(self).html_safe, layout:true), content_type: "text/html")
+    def mail_from_template(email, mail_template)
+      mail(to: email, subject: mail_template.render_subject(self), body:render(html:mail_template.render_body(self).html_safe, layout:true), content_type: "text/html")
     end
 
   end
