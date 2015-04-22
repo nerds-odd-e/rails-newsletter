@@ -34,11 +34,6 @@ module Newsletter
           expect(assigns(:mass_mail)).not_to be_persisted
         end
 
-        it "redirects to the created mass_mail" do
-          post :create, {:mass_mail => valid_attributes}, valid_session
-          expect(response).to redirect_to(MassMail.last)
-        end
-
         describe "with invalid params" do
           it "assigns a newly created but unsaved mass_mail as @mass_mail" do
             post :create, {:mass_mail => invalid_attributes}, valid_session

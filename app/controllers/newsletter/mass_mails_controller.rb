@@ -39,7 +39,7 @@ class Newsletter::MassMailsController < ApplicationController
         flash[:notice] = "#{count} emails sent."
       end
     end
-    respond_with(@mass_mail)
+    render "new"
   end
 
 
