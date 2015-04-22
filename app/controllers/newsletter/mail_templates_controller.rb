@@ -1,6 +1,5 @@
 class Newsletter::MailTemplatesController < ApplicationController
   layout "newsletter/mail_templates"
-  before_action :set_locale
   before_action :set_newsletter, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -56,36 +55,11 @@ class Newsletter::MailTemplatesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def newsletter_params
-    params.require(:mail_template).permit(:subject, :body, :tag_list, :groups=>[])
-  end
-
-  def user
-    current_user
-  end
-
-  def set_locale
+    params.require(:mail_template).permit(:subject, :body, :tag_list)
   end
 
   # POST /mail_templates
   def newsletter_action
-    if @mail_template.valid?
-      if params[:preview]
-        Newsletter::NewsMailer.news_mail(@mail_template, user).deliver_now
-        flash[:notice] = "Preview email has been sent. Please check your mailbox."
-        return render :new
-      end
-      if params[:send_groups]
-        count = 0
-        @mail_template.groups.reject {|x| x.empty?}.collect do |gp|
-          Newsletter.user_class.group(gp)
-        end.flatten.each do |user|
-          count += 1
-          Newsletter::NewsMailer.news_mail(@mail_template, user).deliver_now
-        end
-        flash[:notice] = "#{count} emails sent."
-        return render :new
-      end
-    end
     @mail_template.save
     respond_with(@mail_template)
   end

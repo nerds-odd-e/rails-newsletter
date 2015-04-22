@@ -102,63 +102,6 @@ module Newsletter
       end
 
     end
-    describe "POST create to preview" do
-      before { allow(controller).to receive(:user) {double(email:"a@b.com")}}
-      it "will not create record if preview" do
-        expect {
-          post :create, {:mail_template => valid_attributes, preview:true}, valid_session
-        }.to change(MailTemplate, :count).by(0)
-      end
-
-      it "will keep the form if preview" do
-        post :create, {:mail_template => valid_attributes, preview:true}, valid_session
-        expect(response).to render_template("new")
-        expect(assigns(:mail_template).attributes).to eq valid_attributes
-      end
-
-      it "will send a email to me" do
-        mail = double
-        allow(NewsMailer).to receive(:news_mail) {mail}
-        expect(mail).to receive(:deliver_now)
-        post :create, {:mail_template => valid_attributes, preview:true}, valid_session
-        expect(flash[:notice]).to eq "Preview email has been sent. Please check your mailbox."
-      end
-
-      it "will not send a email to me if mail_template is not valid" do
-        expect(NewsMailer).not_to receive(:news_mail)
-        post :create, {:mail_template => invalid_attributes, preview:true}, valid_session
-      end
-
-    end
-
-    describe "POST create to send to groups" do
-      it "will send a email to nobody" do
-        post :create, {:mail_template => valid_attributes.merge({groups:[""]}), send_groups:true}, valid_session
-        expect(flash[:notice]).to include "0 emails sent."
-      end
-
-
-      it "will send email to selected groups" do
-        user = double
-        mail = double
-        expect(mail).to receive(:deliver_now).once
-        allow(::Newsletter.user_class).to receive(:group).with("users") {[user]}
-        allow(NewsMailer).to receive(:news_mail) {mail}
-        post :create, {:mail_template => valid_attributes.merge({groups:["users", ""]}), send_groups:true}, valid_session
-        expect(flash[:notice]).to include "1 emails sent."
-      end
-
-      it "will pause 10 sec for every 10 users" do
-        user = double
-        mail = double
-        allow(mail).to receive(:deliver_now)
-        allow(::Newsletter.user_class).to receive(:group).with("users") {[user] * 11}
-        expect(NewsMailer).to receive(:news_mail).exactly(11).times {mail}
-        post :create, {:mail_template => valid_attributes.merge({groups:["users", ""]}), send_groups:true}, valid_session
-        expect(flash[:notice]).to include "11 emails sent."
-      end
-
-    end
 
     describe "PUT update" do
       describe "with valid params" do
@@ -173,12 +116,6 @@ module Newsletter
           mail_template = MailTemplate.create! valid_attributes
           put :update, {:id => mail_template.to_param, :mail_template => valid_attributes}, valid_session
           expect(response).to redirect_to(mail_template)
-        end
-
-        it "will keep the form if preview" do
-          mail_template = MailTemplate.create! valid_attributes
-          put :update, {:id => mail_template.to_param, :mail_template => valid_attributes, preview:true}, valid_session
-          expect(response).to render_template("new")
         end
 
       end

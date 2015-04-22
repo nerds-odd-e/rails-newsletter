@@ -2,7 +2,6 @@ class Newsletter::MailTemplate < ActiveRecord::Base
   include ::Newsletter::MailerTemplateHelper
   validates :subject, :body, :presence => true
   acts_as_taggable
-  attr_accessor :groups
 
   def render_subject(env)
     template_render(subject, env).strip

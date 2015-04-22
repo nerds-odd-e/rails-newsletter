@@ -9,12 +9,12 @@ end
 
 RSpec.describe "Newsletters", :type => :request do
 
-  describe "/newsletter/mail_templates/new" do
+  describe "/newsletter/mass_mails/new" do
     it "works!" do
       Newsletter.user_class = User
       get subject
       expect(response).to have_http_status(200)
-      assert_select "#mail_template_groups_users", count:1
+      assert_select "#mass_mail_groups_users", count:1
     end
   end
 end

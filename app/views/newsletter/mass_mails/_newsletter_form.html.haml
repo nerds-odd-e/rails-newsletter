@@ -1,0 +1,11 @@
+= simple_form_for(@mass_mail) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :subject
+    = f.input :body, as:"ckeditor", :input_html => { :ckeditor => {:toolbar => 'full'} }
+    = f.input :groups, as:"check_boxes", collection:Newsletter.user_class.categories
+
+  .form-actions
+    = f.button :submit, "Send It To Myself", name:"preview"
+    = f.button :submit, "Send To Selected Groups", name:"send_groups"
+
