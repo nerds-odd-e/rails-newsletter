@@ -50,6 +50,10 @@ module Newsletter
         is_expected.to eq "default\n"}
 
       it {
+        @body = "{{  new_content<span>}}"
+        is_expected.to eq "default\n"}
+
+      it {
         @body = "{{new_content arg}}"
         is_expected.to eq "arg\n"}
 

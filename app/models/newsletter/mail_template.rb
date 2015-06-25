@@ -1,5 +1,6 @@
 class Newsletter::MailTemplate < ActiveRecord::Base
   include ::Newsletter::MailerTemplateHelper
+  include ActionView::Helpers::SanitizeHelper
   validates :subject, :body, :presence => true
   acts_as_taggable
 
@@ -30,13 +31,12 @@ class Newsletter::MailTemplate < ActiveRecord::Base
         raise "**Missing content '{{#{content}}}'**"
       end
     end
-    if (result.nil? ^ _not.nil?) and !arg.blank?
+    if (result.nil? ^ _not.nil?) and !strip_tags(arg).blank?
       template_render(arg, env)
     else
       result if _not.nil?
     end
   end
-
 
 end
 
