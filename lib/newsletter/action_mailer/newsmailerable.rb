@@ -24,7 +24,7 @@ module Newsletter
     def system_mail_with_tag(tag, email, default = nil, options={})
       mail_template = ::Newsletter::MailTemplate.tagged_with(tag).last || default
       raise "No mail template with the tag '#{tag}, please add it." if not mail_template
-      mail_from_template(email, mail_template, options:options)
+      mail_from_template(email, mail_template, options)
     end
 
     def mail_from_template(email, mail_template, options={})

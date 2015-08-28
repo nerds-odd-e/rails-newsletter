@@ -41,6 +41,11 @@ module Newsletter
       }
 
       it {
+        expect(NewsMailer.system_mail_with_tag("abc", double(email:"t@t.com"), nil, cc:"cc").cc)
+          .to eq ["cc"]
+      }
+
+      it {
         expect{NewsMailer.system_mail_with_tag("not_exist", double(email:"t@t.com")).subject}
           .to raise_error
       }
