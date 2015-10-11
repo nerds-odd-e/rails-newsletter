@@ -23,25 +23,27 @@ class Newsletter::MassMailsController < ApplicationController
   # POST /mail_templates
   def newsletter_action
     if @mass_mail.valid?
-      mail_template = Newsletter::MailTemplate.new subject:@mass_mail.subject, body:@mass_mail.body
-      if params[:preview]
-        Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
-        flash[:notice] = "Preview email has been sent. Please check your mailbox."
-      end
-      if params[:send_groups]
-        count = 0
-        @mass_mail.groups.reject {|x| x.empty?}.collect do |gp|
-          Newsletter.user_class.group(gp)
-        end.flatten.each do |user|
-          count += 1
-          Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
-        end
-        flash[:notice] = "#{count} emails sent."
-      end
+      send_mail(Newsletter::MailTemplate.new subject:@mass_mail.subject, body:@mass_mail.body)
     end
     render "new"
   end
 
+  def send_mail(mail_template)
+    if params[:preview]
+      Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
+      flash[:notice] = "Preview email has been sent. Please check your mailbox."
+    end
+    if params[:send_groups]
+      count = 0
+      @mass_mail.groups.reject {|x| x.empty?}.collect do |gp|
+        Newsletter.user_class.group(gp)
+      end.flatten.each do |user|
+        count += 1
+        Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
+      end
+      flash[:notice] = "#{count} emails sent."
+    end
+  end
 
 end
 
