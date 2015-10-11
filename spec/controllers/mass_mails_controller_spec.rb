@@ -85,7 +85,7 @@ module Newsletter
 
 
       it "will send email to selected groups" do
-        user = double
+        user = double(email:"a@b.com")
         mail = double
         expect(mail).to receive(:deliver_now).once
         allow(::Newsletter.user_class).to receive(:group).with("users") {[user]}

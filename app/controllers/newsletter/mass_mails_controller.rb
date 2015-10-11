@@ -30,7 +30,7 @@ class Newsletter::MassMailsController < ApplicationController
 
   def send_mail(mail_template)
     if params[:preview]
-      Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
+      Newsletter::NewsMailer.news_mail(mail_template, user.email).deliver_now
       flash[:notice] = "Preview email has been sent. Please check your mailbox."
     end
     if params[:send_groups]
@@ -39,7 +39,7 @@ class Newsletter::MassMailsController < ApplicationController
         Newsletter.user_class.group(gp)
       end.flatten.each do |user|
         count += 1
-        Newsletter::NewsMailer.news_mail(mail_template, user).deliver_now
+        Newsletter::NewsMailer.news_mail(mail_template, user.email).deliver_now
       end
       flash[:notice] = "#{count} emails sent."
     end

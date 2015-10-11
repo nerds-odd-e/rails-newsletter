@@ -4,7 +4,7 @@ module Newsletter
   RSpec.describe NewsMailer, :type => :mailer do
 
     let(:mail_template) {FactoryGirl.build(:mail_template)}
-    subject {NewsMailer.news_mail mail_template, double(email:"t@t.com")}
+    subject {NewsMailer.news_mail mail_template, "t@t.com"}
 
     it "should have the mail_template body" do
       expect(subject.body.to_s).to include mail_template.body

@@ -4,9 +4,9 @@ class Newsletter::NewsMailer < ActionMailer::Base
   load_keywords ::Newsletter::MailerTemplateHelper
   default from: "Newsletter"
 
-  def news_mail(newsletter, user)
-    @contactable = user
-    mail_from_template(user.email, newsletter)
+  def news_mail(newsletter, email)
+    @email = email
+    mail_from_template(email, newsletter)
   end
 
 end

@@ -40,7 +40,7 @@ module Newsletter
   module MailerTemplateHelper
 
     def email
-      @contactable and @contactable.email
+      @email
     end
 
   end
