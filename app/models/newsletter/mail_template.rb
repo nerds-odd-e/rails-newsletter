@@ -18,7 +18,6 @@ class Newsletter::MailTemplate < ActiveRecord::Base
     re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
     raw.gsub(recursor){|match|
       match = match[recursor, 1]
-      p match[re, 3].present?
       mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)}
   end
 
