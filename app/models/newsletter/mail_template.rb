@@ -15,13 +15,14 @@ class Newsletter::MailTemplate < ActiveRecord::Base
   private
   def template_render(raw, env)
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
-    re = /^\s*(not)?\s*([\w\d_]+)\??((?:\s|(?:\&nbsp\;))?(.*))?/m
+    re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
     raw.gsub(recursor){|match|
       match = match[recursor, 1]
-      mail_content_for(match[re, 1], match[re, 2].to_sym, match[re, 4], env)}
+      p match[re, 3].present?
+      mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)}
   end
 
-  def mail_content_for(_not, content, arg, env)
+  def mail_content_for(_not, question, content, arg, env)
     if env.respond_to? content
       result = env.send(content)
     else
@@ -31,7 +32,7 @@ class Newsletter::MailTemplate < ActiveRecord::Base
         raise "**Missing content '{{#{content}}}'**"
       end
     end
-    if (result.nil? ^ _not.nil?) and !strip_tags(arg).blank?
+    if (result.nil? ^ _not.nil?) and (question or strip_tags(arg).present?)
       template_render(arg, env)
     else
       result if _not.nil?

@@ -55,7 +55,7 @@ module Newsletter
 
         it {
           @body = "{{new_content?}}"
-          is_expected.to eq "default\n"}
+          is_expected.to eq ""}
 
         it {
           @body = "{{  new_content  }}"
@@ -64,6 +64,10 @@ module Newsletter
         it {
           @body = "{{  new_content<span>}}"
           is_expected.to eq "default\n"}
+
+        it {
+          @body = "{{  new_content? <hr/>}}"
+          is_expected.to eq "<hr/>\n"}
 
         it {
           @body = "{{new_content arg}}"
