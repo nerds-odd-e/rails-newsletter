@@ -6,7 +6,7 @@ PATH
       ckeditor
       haml-rails
       i18n
-      rails
+      rails (>= 5.0.0.1, < 5.1)
       rails-i18n
       responders
       simple_form
