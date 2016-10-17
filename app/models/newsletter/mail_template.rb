@@ -1,5 +1,4 @@
 class Newsletter::MailTemplate < ActiveRecord::Base
-  include ::Newsletter::MailerTemplateHelper
   include ActionView::Helpers::SanitizeHelper
   validates :subject, :body, :presence => true
   acts_as_taggable
@@ -10,6 +9,14 @@ class Newsletter::MailTemplate < ActiveRecord::Base
 
   def render_body(env)
     template_render(body, env)
+  end
+
+  def method_missing(method, *args, &block)
+    if (method.to_s.end_with?('_path') || method.to_s.end_with?('_url')) && main_app.respond_to?(method)
+      main_app.send(method, *args)
+    else
+      super
+    end
   end
 
   private
