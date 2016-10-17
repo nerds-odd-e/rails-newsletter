@@ -4,13 +4,13 @@ source 'https://rubygems.org'
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
-gem "haml-rails"
+gem 'haml-rails'
 gem 'responders', '~> 2.0'
 gem 'ckeditor'
 group :development, :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails', :require => false
-  gem "letter_opener"
+  gem 'factory_girl_rails', require: false
+  gem 'letter_opener'
   gem 'rails-controller-testing'
 end
 

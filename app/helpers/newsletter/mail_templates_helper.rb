@@ -7,6 +7,5 @@ module Newsletter
         super
       end
     end
-
   end
 end

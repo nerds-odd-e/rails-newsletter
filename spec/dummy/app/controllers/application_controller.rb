@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_user
-    UserForTest.create email:"a@b.com"
+    UserForTest.create email: 'a@b.com'
   end
 end

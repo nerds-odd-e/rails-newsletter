@@ -5,4 +5,3 @@ module Newsletter
     end
   end
 end
-

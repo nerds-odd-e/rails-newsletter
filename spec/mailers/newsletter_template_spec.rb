@@ -1,117 +1,133 @@
-require "rails_helper"
+require 'rails_helper'
 
 class MailerForTest < ActionMailer::Base
-  layout "mail"
+  layout 'mail'
   enable_mailer_template
-  default from: "me"
-  def test_mail(mail_template, options={})
-    mail_from_template("fake@n.com", mail_template, options)
+  default from: 'me'
+  def test_mail(mail_template, options = {})
+    mail_from_template('fake@n.com', mail_template, options)
   end
-
 end
 
 module MyKeywords
   def new_content
-    "default"
+    'default'
   end
+
   def empty_content
   end
 end
 
 module Newsletter
-  RSpec.describe "newsmailerize", :type => :mailer do
-    let(:mail_template) {FactoryGirl.build(:mail_template)}
+  RSpec.describe 'newsmailerize', type: :mailer do
+    let(:mail_template) { FactoryGirl.build(:mail_template) }
 
-    describe "options" do
-      subject{
+    describe 'options' do
+      subject do
         mail_template.body = @body
-        MailerForTest.test_mail(mail_template, @options)}
+        MailerForTest.test_mail(mail_template, @options)
+      end
 
-      it {@body = "abc"
-          @options = {cc:"me"}
-          expect(subject.cc).to include "me"}
-
+      it do
+        @body = 'abc'
+        @options = { cc: 'me' }
+        expect(subject.cc).to include 'me'
+      end
     end
 
-    describe "body" do
-      subject{
+    describe 'body' do
+      subject do
         mail_template.body = @body
-        MailerForTest.test_mail(mail_template).body.to_s}
+        MailerForTest.test_mail(mail_template).body.to_s
+      end
 
-      it {@body = "abc"
-          is_expected.to eq "abc\n"}
+      it do
+        @body = 'abc'
+        is_expected.to eq "abc\n"
+      end
 
-      it {@body = "{{not_exist}}"
-          expect{subject}.to raise_error}
+      it do
+        @body = '{{not_exist}}'
+        expect { subject }.to raise_error
+      end
 
-      context "given there is a content helper" do
-        before {
+      context 'given there is a content helper' do
+        before do
           MailerForTest.load_keywords(MyKeywords)
-        }
+        end
 
-        it {
-          @body = "{{new_content}}"
-          is_expected.to eq "default\n"}
+        it do
+          @body = '{{new_content}}'
+          is_expected.to eq "default\n"
+        end
 
-        it {
-          @body = "{{new_content?}}"
-          is_expected.to eq ""}
+        it do
+          @body = '{{new_content?}}'
+          is_expected.to eq ''
+        end
 
-        it {
-          @body = "{{  new_content  }}"
-          is_expected.to eq "default\n"}
+        it do
+          @body = '{{  new_content  }}'
+          is_expected.to eq "default\n"
+        end
 
-        it {
-          @body = "{{  new_content<span>}}"
-          is_expected.to eq "default\n"}
+        it do
+          @body = '{{  new_content<span>}}'
+          is_expected.to eq "default\n"
+        end
 
-        it {
-          @body = "{{  new_content? <hr/>}}"
-          is_expected.to eq "<hr/>\n"}
+        it do
+          @body = '{{  new_content? <hr/>}}'
+          is_expected.to eq "<hr/>\n"
+        end
 
-        it {
-          @body = "{{new_content arg}}"
-          is_expected.to eq "arg\n"}
+        it do
+          @body = '{{new_content arg}}'
+          is_expected.to eq "arg\n"
+        end
 
-        it {
+        it do
           @body = "{{new_content \narg\narg}}"
-          is_expected.to eq "\narg\narg\n"}
+          is_expected.to eq "\narg\narg\n"
+        end
 
-        it {
-          @body = "{{new_content&nbsp;arg}}"
-          is_expected.to eq "arg\n"}
+        it do
+          @body = '{{new_content&nbsp;arg}}'
+          is_expected.to eq "arg\n"
+        end
 
-        it {
-          @body = "{{new_content  arg }}"
-          is_expected.to eq " arg \n"}
+        it do
+          @body = '{{new_content  arg }}'
+          is_expected.to eq " arg \n"
+        end
 
-        it {
-          @body = "{{new_content This is {{new_content}}}}"
-          is_expected.to eq "This is default\n"}
+        it do
+          @body = '{{new_content This is {{new_content}}}}'
+          is_expected.to eq "This is default\n"
+        end
 
-        it {
-          @body = "{{new_content I can still use {this} in my content}}"
-          is_expected.to eq "I can still use {this} in my content\n"}
+        it do
+          @body = '{{new_content I can still use {this} in my content}}'
+          is_expected.to eq "I can still use {this} in my content\n"
+        end
 
-        it {
-          @body = "{{not new_content arg}}"
-          is_expected.to eq ""}
-
+        it do
+          @body = '{{not new_content arg}}'
+          is_expected.to eq ''
+        end
       end
 
-      context "given there is a content helper returns nil" do
+      context 'given there is a content helper returns nil' do
+        it do
+          @body = '{{empty_content arg}}'
+          is_expected.to eq ''
+        end
 
-        it {
-          @body = "{{empty_content arg}}"
-          is_expected.to eq ""}
-
-        it {
-          @body = "{{not empty_content arg}}"
-          is_expected.to eq "arg\n"}
-
+        it do
+          @body = '{{not empty_content arg}}'
+          is_expected.to eq "arg\n"
+        end
       end
     end
-
   end
 end
-

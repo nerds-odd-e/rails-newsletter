@@ -11,14 +11,9 @@ RSpec.configure do |config|
 end
 
 include ActionDispatch::TestProcess
-  FactoryGirl.define do
-
-    factory :mail_template, class:Newsletter::MailTemplate do
-      subject "how do you keep your sanity"
-      body "I'm losing it."
-    end
-
+FactoryGirl.define do
+  factory :mail_template, class: Newsletter::MailTemplate do
+    subject 'how do you keep your sanity'
+    body "I'm losing it."
   end
-
-
-
+end

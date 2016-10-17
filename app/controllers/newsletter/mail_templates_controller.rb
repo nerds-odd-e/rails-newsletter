@@ -1,5 +1,5 @@
 class Newsletter::MailTemplatesController < ApplicationController
-  layout "newsletter/mail_templates"
+  layout 'newsletter/mail_templates'
   before_action :set_newsletter, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -12,7 +12,7 @@ class Newsletter::MailTemplatesController < ApplicationController
   def tag
     @tag = params[:tag_id]
     @mail_templates = Newsletter::MailTemplate.tagged_with(@tag)
-    render "index"
+    render 'index'
   end
 
   # GET /mail_templates/1
@@ -34,7 +34,6 @@ class Newsletter::MailTemplatesController < ApplicationController
     newsletter_action
   end
 
-
   # PATCH/PUT /mail_templates/1
   def update
     @mail_template.assign_attributes(newsletter_params)
@@ -48,6 +47,7 @@ class Newsletter::MailTemplatesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_newsletter
     @mail_template = Newsletter::MailTemplate.find(params[:id])
@@ -63,5 +63,4 @@ class Newsletter::MailTemplatesController < ApplicationController
     @mail_template.save
     respond_with(@mail_template)
   end
-
 end

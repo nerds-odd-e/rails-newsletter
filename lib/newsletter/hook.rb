@@ -5,8 +5,6 @@ module Newsletter
         require 'newsletter/action_mailer/newsmailerable'
         ::ActionMailer::Base.send :include, Newsletter::ActionMailer::MailerTemplating
       end
-
     end
   end
 end
-

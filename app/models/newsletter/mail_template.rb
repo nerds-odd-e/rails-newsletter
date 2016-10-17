@@ -1,6 +1,6 @@
 class Newsletter::MailTemplate < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper
-  validates :subject, :body, :presence => true
+  validates :subject, :body, presence: true
   acts_as_taggable
 
   def render_subject(env)
@@ -20,12 +20,14 @@ class Newsletter::MailTemplate < ActiveRecord::Base
   end
 
   private
+
   def template_render(raw, env)
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
     re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
-    raw.gsub(recursor){|match|
+    raw.gsub(recursor) do |match|
       match = match[recursor, 1]
-      mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)}
+      mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)
+    end
   end
 
   def mail_content_for(_not, question, content, arg, env)
@@ -38,12 +40,10 @@ class Newsletter::MailTemplate < ActiveRecord::Base
         raise "**Missing content '{{#{content}}}'**"
       end
     end
-    if (result.nil? ^ _not.nil?) and (question or strip_tags(arg).present?)
+    if (result.nil? ^ _not.nil?) && (question || strip_tags(arg).present?)
       template_render(arg, env)
     else
       result if _not.nil?
     end
   end
-
 end
-
