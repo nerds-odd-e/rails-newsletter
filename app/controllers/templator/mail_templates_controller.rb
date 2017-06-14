@@ -1,17 +1,17 @@
-class Newsletter::MailTemplatesController < ApplicationController
-  layout 'newsletter/mail_templates'
+class Templator::MailTemplatesController < ApplicationController
+  layout 'templator/mail_templates'
   before_action :set_newsletter, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
   # GET /mail_templates
   def index
-    @mail_templates = Newsletter::MailTemplate.all
+    @mail_templates = Templator::MailTemplate.all
   end
 
   def tag
     @tag = params[:tag_id]
-    @mail_templates = Newsletter::MailTemplate.tagged_with(@tag)
+    @mail_templates = Templator::MailTemplate.tagged_with(@tag)
     render 'index'
   end
 
@@ -21,7 +21,7 @@ class Newsletter::MailTemplatesController < ApplicationController
 
   # GET /mail_templates/new
   def new
-    @mail_template = Newsletter::MailTemplate.new
+    @mail_template = Templator::MailTemplate.new
   end
 
   # GET /mail_templates/1/edit
@@ -30,7 +30,7 @@ class Newsletter::MailTemplatesController < ApplicationController
 
   # POST /mail_templates
   def create
-    @mail_template = Newsletter::MailTemplate.new(newsletter_params)
+    @mail_template = Templator::MailTemplate.new(newsletter_params)
     newsletter_action
   end
 
@@ -50,7 +50,7 @@ class Newsletter::MailTemplatesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_newsletter
-    @mail_template = Newsletter::MailTemplate.find(params[:id])
+    @mail_template = Templator::MailTemplate.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

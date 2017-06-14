@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Newsletter
+module Templator
   RSpec.describe 'template from view' do
     let(:mail_template) { FactoryGirl.build(:mail_template, body: @body) }
     let(:view) { double }

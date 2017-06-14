@@ -18,7 +18,7 @@ module MyKeywords
   end
 end
 
-module Newsletter
+module Templator
   RSpec.describe 'newsmailerize', type: :mailer do
     let(:mail_template) { FactoryGirl.build(:mail_template) }
 

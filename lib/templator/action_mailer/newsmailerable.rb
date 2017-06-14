@@ -2,14 +2,14 @@ require 'active_support/concern'
 require 'active_support/core_ext/array/extract_options'
 require 'active_support/deprecation/reporting'
 
-module Newsletter
+module Templator
   module ActionMailer
     module MailerTemplating
       extend ActiveSupport::Concern
 
       module ClassMethods
         def enable_mailer_template
-          include ::Newsletter::MailerTemplatable
+          include ::Templator::MailerTemplatable
         end
 
         def load_keywords(m)
@@ -21,7 +21,7 @@ module Newsletter
 
   module MailerTemplatable
     def system_mail_with_tag(tag, email, default = nil, options = {})
-      mail_template = ::Newsletter::MailTemplate.tagged_with(tag).last || default
+      mail_template = ::Templator::MailTemplate.tagged_with(tag).last || default
       raise "No mail template with the tag '#{tag}, please add it." unless mail_template
       mail_from_template(email, mail_template, options)
     end

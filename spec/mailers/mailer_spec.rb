@@ -2,12 +2,12 @@ require 'rails_helper'
 
 class NewsMailer < ActionMailer::Base
   enable_mailer_template
-  load_keywords ::Newsletter::MailerTemplateHelper
+  load_keywords ::Templator::MailerTemplateHelper
   default from: 'me'
   layout 'mail'
 end
 
-module Newsletter
+module Templator
   RSpec.describe NewsMailer, type: :mailer do
     let(:mail_template) { FactoryGirl.build(:mail_template) }
 

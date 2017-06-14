@@ -12,6 +12,6 @@
   %b Body:
   %div=raw @mail_template.body
 
-= link_to 'Edit', Newsletter::Engine.routes.url_helpers.edit_mail_template_path(@mail_template)
+= link_to 'Edit', Templator::Engine.routes.url_helpers.edit_mail_template_path(@mail_template)
 \|
-= link_to 'Back', Newsletter::Engine.routes.url_helpers.mail_templates_path
+= link_to 'Back', Templator::Engine.routes.url_helpers.mail_templates_path

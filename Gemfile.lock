@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    newsletter (0.0.1)
+    templator (0.0.1)
       acts-as-taggable-on
       ckeditor
       haml-rails
@@ -101,7 +101,7 @@ GEM
       launchy (~> 2.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    mail (2.6.4)
+    mail (2.6.5)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (3.1)
@@ -202,11 +202,11 @@ DEPENDENCIES
   factory_girl_rails
   haml-rails
   letter_opener
-  newsletter!
   rails-controller-testing
   responders (~> 2.0)
   rspec-rails
   sqlite3
+  templator!
 
 BUNDLED WITH
    1.13.7

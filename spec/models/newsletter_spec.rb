@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe Newsletter, type: :model do
+RSpec.describe Templator, type: :model do
 end

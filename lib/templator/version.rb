@@ -1,3 +1,3 @@
-module Newsletter
+module Templator
   VERSION = '0.0.1'.freeze
 end

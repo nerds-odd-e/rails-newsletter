@@ -12,7 +12,7 @@ end
 
 include ActionDispatch::TestProcess
 FactoryGirl.define do
-  factory :mail_template, class: Newsletter::MailTemplate do
+  factory :mail_template, class: Templator::MailTemplate do
     subject 'how do you keep your sanity'
     body "I'm losing it."
   end

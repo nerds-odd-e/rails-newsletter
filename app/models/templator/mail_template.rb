@@ -1,7 +1,8 @@
-class Newsletter::MailTemplate < ActiveRecord::Base
+class Templator::MailTemplate < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper
   validates :subject, :body, presence: true
   acts_as_taggable
+  self.table_name = 'newsletter_mail_templates'
 
   def render_subject(env)
     template_render(subject, env).strip

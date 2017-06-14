@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Newsletter
+module Templator
   RSpec.describe MailTemplatesController, type: :controller do
     routes { Engine.routes }
 
@@ -51,7 +51,7 @@ module Newsletter
       it 'assigns a new mail_template as @mail_template' do
         get :new, {}, valid_session
         expect(assigns(:mail_template)).to be_a_new(MailTemplate)
-        expect(response).to render_template(layout: 'newsletter/mail_templates')
+        expect(response).to render_template(layout: 'templator/mail_templates')
       end
     end
 
