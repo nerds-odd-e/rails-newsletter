@@ -28,10 +28,9 @@ module Templator
 
     def mail_from_template(email, mail_template, options = {})
       mail(to: email,
-           subject: mail_template.render_subject(self),
-           body: render(html: mail_template.render_body(self).html_safe, layout: true),
-           content_type: 'text/html',
-           **options)
+           subject: mail_template.render_subject(self), **options) do |format|
+             format.html { render(html: mail_template.render_body(self).html_safe, layout: true) }
+           end
     end
   end
 
