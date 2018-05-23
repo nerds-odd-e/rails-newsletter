@@ -9,12 +9,6 @@ class Templator::MailTemplatesController < ApplicationController
     @mail_templates = Templator::MailTemplate.all
   end
 
-  def tag
-    @tag = params[:tag_id]
-    @mail_templates = Templator::MailTemplate.tagged_with(@tag)
-    render 'index'
-  end
-
   # GET /mail_templates/1
   def show
   end
@@ -55,7 +49,7 @@ class Templator::MailTemplatesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def newsletter_params
-    params.require(:mail_template).permit(:subject, :body, :tag_list)
+    params.require(:mail_template).permit(:subject, :body, :name)
   end
 
   # POST /mail_templates

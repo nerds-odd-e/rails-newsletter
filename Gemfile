@@ -12,6 +12,7 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'letter_opener'
   gem 'rails-controller-testing'
+  gem 'shoulda-matchers'
 end
 
 # Declare any dependencies that are still in development here instead of in

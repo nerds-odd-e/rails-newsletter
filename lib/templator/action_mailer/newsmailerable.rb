@@ -20,9 +20,9 @@ module Templator
   end
 
   module MailerTemplatable
-    def system_mail_with_tag(tag, email, default = nil, options = {})
-      mail_template = ::Templator::MailTemplate.tagged_with(tag).last || default
-      raise "No mail template with the tag '#{tag}, please add it." unless mail_template
+    def system_mail_with_tag(name, email, default = nil, options = {})
+      mail_template = ::Templator::MailTemplate.find_by(name: name) || default
+      raise "No mail template with the tag '#{name}, please add it." unless mail_template
       mail_from_template(email, mail_template, options)
     end
 

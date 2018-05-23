@@ -25,20 +25,6 @@ module Templator
       end
     end
 
-    describe 'GET index' do
-      let(:mail_template) { MailTemplate.create! valid_attributes.merge(tag_list: 'tag1, tag2') }
-      before { mail_template }
-      it 'filters the tag' do
-        get :tag, { tag_id: 'abc' }, valid_session
-        expect(assigns(:mail_templates)).to eq([])
-      end
-
-      it 'show mail_template with the tag' do
-        get :tag, { tag_id: 'tag2' }, valid_session
-        expect(assigns(:mail_templates)).to eq([mail_template])
-      end
-    end
-
     describe 'GET show' do
       it 'assigns the requested mail_template as @mail_template' do
         mail_template = MailTemplate.create! valid_attributes
@@ -72,8 +58,8 @@ module Templator
         end
 
         it 'add tags to the mail_template' do
-          post :create, { mail_template: valid_attributes.merge(tag_list: 'a b,c') }, valid_session
-          expect(assigns(:mail_template).tag_list).to eq ['a b', 'c']
+          post :create, { mail_template: valid_attributes.merge(name: 'abc') }, valid_session
+          expect(assigns(:mail_template).name).to eq 'abc'
         end
 
         it 'assigns a newly created mail_template as @mail_template' do

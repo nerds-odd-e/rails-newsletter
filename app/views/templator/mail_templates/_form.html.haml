@@ -2,7 +2,7 @@
   = f.error_notification
   .form-inputs
     = f.input :subject
-    = f.input :tag_list, :input_html => {value: @mail_template.tag_list.join(", ")}
+    = f.input :name
     = f.input :body, as:"ckeditor", :input_html => { :ckeditor => {:toolbar => 'full'} }
 
   .form-actions

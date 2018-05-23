@@ -11,7 +11,7 @@ class TestMailer < ActionMailer::Base
 end
 
 RSpec.describe TestMailer, type: :mailer do
-  let(:mail_template) { FactoryGirl.create(:mail_template, tag_list: 'test_tag,system') }
+  let(:mail_template) { FactoryGirl.create(:mail_template, name: 'test_tag') }
   before { mail_template }
 
   context 'for mail_template with tag' do

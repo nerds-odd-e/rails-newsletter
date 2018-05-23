@@ -12,7 +12,7 @@ module Templator
     let(:mail_template) { FactoryGirl.build(:mail_template) }
 
     context 'for mail_template with tag' do
-      let(:mail_template) { FactoryGirl.create(:mail_template, tag_list: 'abc,system') }
+      let(:mail_template) { FactoryGirl.create(:mail_template, name: 'abc') }
       before { mail_template }
 
       it do

@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'responders'
   s.add_dependency 'rails-i18n'
-  s.add_dependency 'acts-as-taggable-on'
   s.add_development_dependency 'rails', '>=5.0.0.1', '<5.1'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'simple_form'
@@ -29,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'shoulda-matchers'
 end
