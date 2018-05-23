@@ -8,16 +8,16 @@
   %thead
     %tr
       %th Subject
-      %th Tags
+      %th Name
       %th
       %th
       %th
       
   %tbody
-    - @mail_templates.sort_by{|n| n.tag_list}.each do |newsletter|
+    - @mail_templates.each do |newsletter|
       %tr
         %td= newsletter.subject
-        %td= render partial:"tags", locals:{tag_list:newsletter.tag_list}
+        %td= link_to newsletter.name, edit_mail_template_path(newsletter)
         %td= link_to 'Show', newsletter
         %td= link_to 'Edit', edit_mail_template_path(newsletter)
         %td= link_to 'Destroy', newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }
