@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'responders'
   s.add_dependency 'rails-i18n'
-  s.add_development_dependency 'rails', '>=5.0.0.1', '<5.1'
+  s.add_development_dependency 'rails', '>=5.0.0.1'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'simple_form'
   s.add_development_dependency 'i18n'

@@ -16,17 +16,17 @@ module Templator
       before { mail_template }
 
       it do
-        expect(NewsMailer.system_mail_with_tag('abc', double(email: 't@t.com')).subject)
+        expect(NewsMailer.system_mail_with_tag('abc', 't@t.com').subject)
           .to eq mail_template.subject
       end
 
       it do
-        expect(NewsMailer.system_mail_with_tag('abc', double(email: 't@t.com'), nil, cc: 'cc').cc)
+        expect(NewsMailer.system_mail_with_tag('abc', 't@t.com', nil, cc: 'cc').cc)
           .to eq ['cc']
       end
 
       it do
-        expect { NewsMailer.system_mail_with_tag('not_exist', double(email: 't@t.com')).subject }
+        expect { NewsMailer.system_mail_with_tag('not_exist', 't@t.com').subject }
           .to raise_error
       end
     end

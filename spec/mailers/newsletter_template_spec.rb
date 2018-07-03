@@ -16,28 +16,30 @@ module MyKeywords
 
   def empty_content
   end
+
+  def course_photo
+    url = add_or_retrieve_inline_attachment_url('photo1', "xxxxx")
+    url
+  end
 end
 
 module Templator
-  RSpec.describe 'newsmailerize', type: :mailer do
-    let(:mail_template) { FactoryGirl.build(:mail_template) }
+  RSpec.describe 'newsmailerized mail', type: :mailer do
+    let(:body) { 'abc' }
+    let(:mail_template) { FactoryGirl.build(:mail_template, body: body) }
+    subject { MailerForTest.test_mail(mail_template, @options || {}) }
 
     describe 'options' do
-      subject do
-        mail_template.body = @body
-        MailerForTest.test_mail(mail_template, @options)
-      end
 
       it do
-        @body = 'abc'
         @options = { cc: 'me' }
         expect(subject.cc).to include 'me'
       end
     end
 
     describe 'body' do
+      let(:body) { @body }
       subject do
-        mail_template.body = @body
         MailerForTest.test_mail(mail_template).body.to_s
       end
 
@@ -127,6 +129,20 @@ module Templator
           @body = '{{not empty_content arg}}'
           is_expected.to eq "arg\n"
         end
+      end
+    end
+
+    describe 'attachments' do
+      def email_body(email)
+        email.body.parts.detect{|p| p.content_type.match(/text\/html/)}.body
+      end
+      let(:body) { 'Link to the photo is: {{course_photo}}' }
+      it { expect(subject.attachments.count).to eq 1 }
+      it { expect(email_body(subject)).to have_content 'cid' }
+
+      context 'when the keyword is called twice' do
+        let(:body) { 'Link to the photo is: {{course_photo}} {{course_photo}}' }
+        it { expect(subject.attachments.count).to eq 1 }
       end
     end
   end

@@ -203,7 +203,7 @@ DEPENDENCIES
   haml-rails
   i18n
   letter_opener
-  rails (>= 5.0.0.1, < 5.1)
+  rails (>= 5.0.0.1)
   rails-controller-testing
   responders (~> 2.0)
   rspec-rails
