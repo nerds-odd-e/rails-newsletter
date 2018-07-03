@@ -48,6 +48,7 @@ module Templator
     def collecting_attachments(&callback)
       @collecting_attachments = true
       callback.call
+    ensure
       @collecting_attachments = false
     end
   end
