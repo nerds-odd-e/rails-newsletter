@@ -14,6 +14,10 @@ module MyKeywords
     'default'
   end
 
+  def nested_content
+    '{{new_content}}'
+  end
+
   def empty_content
   end
 
@@ -60,6 +64,11 @@ module Templator
 
         it do
           @body = '{{new_content}}'
+          is_expected.to eq "default\n"
+        end
+
+        it do
+          @body = '{{nested_content}}'
           is_expected.to eq "default\n"
         end
 

@@ -23,6 +23,7 @@ class Templator::MailTemplate < ActiveRecord::Base
   private
 
   def template_render(raw, env)
+    return unless raw
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
     re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
     raw.gsub(recursor) do |match|
@@ -33,7 +34,7 @@ class Templator::MailTemplate < ActiveRecord::Base
 
   def mail_content_for(_not, question, content, arg, env)
     if env.respond_to? content
-      result = env.send(content)
+      result = template_render(env.send(content), env)
     else
       if env.try(:content_for?, content)
         result = env.content_for(content)
