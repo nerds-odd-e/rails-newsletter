@@ -82,6 +82,7 @@ module Templator
             let(:the_object) { double }
             let(:options) { { an_object: the_object }}
             before { allow(the_object).to receive(:instance_method) { 'I am called' }}
+
             it { is_expected.to eq "I am called\n" }
           end
         end
