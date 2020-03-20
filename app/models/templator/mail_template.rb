@@ -4,12 +4,12 @@ class Templator::MailTemplate < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   self.table_name = 'newsletter_mail_templates'
 
-  def render_subject(env)
-    template_render(subject, env).strip
+  def render_subject(options)
+    template_render(subject, options).strip
   end
 
-  def render_body(env)
-    template_render(body, env)
+  def render_body(options)
+    template_render(body, options)
   end
 
   def method_missing(method, *args, &block)
@@ -22,29 +22,36 @@ class Templator::MailTemplate < ActiveRecord::Base
 
   private
 
-  def template_render(raw, env)
+  def template_render(raw, options)
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
-    re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
+    re = /^\s*(not)?\s*([\w\d_\.]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
     raw&.to_s&.gsub(recursor) do |match|
       match = match[recursor, 1]
-      mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)
+      mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], options)
     end
   end
 
-  def mail_content_for(_not, question, content, arg, env)
-    if env.respond_to? content
-      result = template_render(env.send(content), env)
-    else
-      if env.try(:content_for?, content)
-        result = env.content_for(content)
-      else
-        raise "**Missing content '{{#{content}}}'**"
-      end
-    end
+  def mail_content_for(_not, question, content, arg, options)
+    result = extract_content_from_context(content, options)
     if (result.nil? ^ _not.nil?) && (question || strip_tags(arg).present?)
-      template_render(arg, env)
+      template_render(arg, options)
     else
       result if _not.nil?
     end
   end
+
+  private
+
+  def extract_content_from_context(content, options)
+    env = options[:env]
+    return template_render(env.send(content), options) if env.respond_to? content
+    return env.content_for(content) if env.try(:content_for?, content)
+
+    if content =~ /(\w+)\.(\w+)/ &&  options.include?($~[1].to_sym)
+      return 'I am called'
+    end
+    raise "**Missing content '{{#{content}}}'**"
+  end
+
+
 end

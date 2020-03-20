@@ -27,12 +27,13 @@ module Templator
     end
 
     def mail_from_template(email, mail_template, options = {})
+      options.merge!(env: self)
       collecting_attachments do
-        mail_template.render_body(self)
+        mail_template.render_body(options)
       end
       mail(to: email,
-           subject: mail_template.render_subject(self), **options) do |format|
-             format.html { render(html: mail_template.render_body(self).html_safe, layout: true) }
+           subject: mail_template.render_subject(options), **options) do |format|
+             format.html { render(html: mail_template.render_body(options).html_safe, layout: true) }
            end
     end
 

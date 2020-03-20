@@ -31,21 +31,22 @@ module Templator
   RSpec.describe 'newsmailerized mail', type: :mailer do
     let(:body) { 'abc' }
     let(:mail_template) { FactoryGirl.build(:mail_template, body: body) }
-    subject { MailerForTest.test_mail(mail_template, @options || {}) }
+    let(:options) { {} }
+    let(:mail) { MailerForTest.test_mail(mail_template, options) }
+    subject { mail }
 
     describe 'options' do
+      let(:options) {{ cc: 'me' }}
 
       it do
-        @options = { cc: 'me' }
         expect(subject.cc).to include 'me'
       end
     end
 
     describe 'body' do
+      let(:options) { {} }
       let(:body) { @body }
-      subject do
-        MailerForTest.test_mail(mail_template).body.to_s
-      end
+      subject { mail.body.to_s }
 
       it do
         @body = 'abc'
@@ -53,8 +54,8 @@ module Templator
       end
 
       it do
-        @body = '{{not_exist}}'
-        expect { subject }.to raise_error
+        @body = '{{non_exist}}'
+        expect { subject }.to raise_error "**Missing content '{{non_exist}}'**"
       end
 
       context 'given there is a content helper' do
@@ -70,6 +71,19 @@ module Templator
         it do
           @body = '{{nested_content}}'
           is_expected.to eq "default\n"
+        end
+
+        describe 'method on an object' do
+          before { @body = '{{an_object.instance_method}}' }
+
+          it { expect { subject }.to raise_error "**Missing content '{{an_object.instance_method}}'**" }
+
+          describe 'when the object exist' do
+            let(:the_object) { double }
+            let(:options) { { an_object: the_object }}
+            before { allow(the_object).to receive(:instance_method) { 'I am called' }}
+            it { is_expected.to eq "I am called\n" }
+          end
         end
 
         it do
