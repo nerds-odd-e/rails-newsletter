@@ -23,10 +23,9 @@ class Templator::MailTemplate < ActiveRecord::Base
   private
 
   def template_render(raw, env)
-    return unless raw
     recursor = /\{\{((?:[^{}]++|\{\g<1>\})++)\}\}/
     re = /^\s*(not)?\s*([\w\d_]+)(\??)((?:\s|(?:\&nbsp\;))?(.*))?/m
-    raw.gsub(recursor) do |match|
+    raw&.to_s&.gsub(recursor) do |match|
       match = match[recursor, 1]
       mail_content_for(match[re, 1], match[re, 3].present?, match[re, 2].to_sym, match[re, 5], env)
     end
