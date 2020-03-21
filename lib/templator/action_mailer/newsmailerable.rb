@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 require 'active_support/core_ext/array/extract_options'
 require 'active_support/deprecation/reporting'
@@ -22,7 +24,10 @@ module Templator
   module MailerTemplatable
     def system_mail_with_tag(name, email, default = nil, options = {})
       mail_template = ::Templator::MailTemplate.find_by(name: name) || default
-      raise "No mail template with the tag '#{name}, please add it." unless mail_template
+      unless mail_template
+        raise "No mail template with the tag '#{name}, please add it."
+      end
+
       mail_from_template(email, mail_template, options)
     end
 
@@ -39,7 +44,9 @@ module Templator
 
     def add_or_retrieve_inline_attachment_url(filename, data)
       if @collecting_attachments
-        attachments.inline[filename] = data unless attachments[filename].present?
+        unless attachments[filename].present?
+          attachments.inline[filename] = data
+        end
       end
       attachments[filename]&.url
     end

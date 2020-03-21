@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ckeditor'
 # Use this hook to configure ckeditor
 Ckeditor.setup do |_config|

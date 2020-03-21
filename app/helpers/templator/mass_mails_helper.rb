@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Templator
   module MassMailsHelper
     def method_missing(method, *args, &block)

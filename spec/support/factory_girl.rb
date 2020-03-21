@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.before(:suite) do
@@ -15,6 +17,6 @@ FactoryGirl.define do
   factory :mail_template, class: Templator::MailTemplate do
     subject 'how do you keep your sanity'
     body "I'm losing it."
-    name "abc"
+    name 'abc'
   end
 end

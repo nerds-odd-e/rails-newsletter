@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Templator
   class TemplateIt
     include ActionView::Helpers::SanitizeHelper
@@ -32,9 +34,9 @@ module Templator
       return env.content_for(content) if env.try(:content_for?, content)
 
       if content =~ /(\w+)\.(\w+)/
-        object = $~[1].to_sym
-        method = $~[2]
-        if @options.include?($~[1].to_sym)
+        object = $LAST_MATCH_INFO[1].to_sym
+        method = $LAST_MATCH_INFO[2]
+        if @options.include?($LAST_MATCH_INFO[1].to_sym)
           return @options[object].send(method)
         end
       end
@@ -42,4 +44,3 @@ module Templator
     end
   end
 end
-

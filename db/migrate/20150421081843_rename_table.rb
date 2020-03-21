@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameTable < ActiveRecord::Migration
   def change
     rename_table :newsletter_newsletters, :newsletter_mail_templates

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Declare your gem's dependencies in newsletter.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
+gem 'ckeditor'
 gem 'haml-rails'
 gem 'responders', '~> 2.0'
-gem 'ckeditor'
 group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails', require: false

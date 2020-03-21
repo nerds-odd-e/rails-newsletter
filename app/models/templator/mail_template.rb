@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'templator/template_it'
 
 class Templator::MailTemplate < ActiveRecord::Base
@@ -21,4 +23,3 @@ class Templator::MailTemplate < ActiveRecord::Base
     end
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simple_form'
 require 'templator/railtie'
 require 'templator/hook'

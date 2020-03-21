@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 module Templator
@@ -5,7 +7,7 @@ module Templator
     let(:mail_template) { FactoryGirl.build(:mail_template, body: @body) }
     let(:view) { double }
     subject do
-      mail_template.render_body({env: view})
+      mail_template.render_body({ env: view })
     end
 
     it do

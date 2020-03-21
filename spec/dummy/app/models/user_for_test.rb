@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserForTest < ActiveRecord::Base
   self.table_name = 'users'
 

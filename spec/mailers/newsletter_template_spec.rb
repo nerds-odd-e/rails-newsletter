@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 class MailerForTest < ActionMailer::Base
@@ -18,11 +20,10 @@ module MyKeywords
     '{{new_content}}'
   end
 
-  def empty_content
-  end
+  def empty_content; end
 
   def course_photo
-    url = add_or_retrieve_inline_attachment_url('photo1', "xxxxx")
+    url = add_or_retrieve_inline_attachment_url('photo1', 'xxxxx')
     url
   end
 end
@@ -36,7 +37,7 @@ module Templator
     subject { mail }
 
     describe 'options' do
-      let(:options) {{ cc: 'me' }}
+      let(:options) { { cc: 'me' } }
 
       it do
         expect(subject.cc).to include 'me'
@@ -80,8 +81,8 @@ module Templator
 
           describe 'when the object exist' do
             let(:the_object) { double }
-            let(:options) { { an_object: the_object }}
-            before { allow(the_object).to receive(:instance_method) { 'I am called' }}
+            let(:options) { { an_object: the_object } }
+            before { allow(the_object).to receive(:instance_method) { 'I am called' } }
 
             it { is_expected.to eq "I am called\n" }
           end
@@ -158,7 +159,7 @@ module Templator
 
     describe 'attachments' do
       def email_body(email)
-        email.body.parts.detect{|p| p.content_type.match(/text\/html/)}.body
+        email.body.parts.detect { |p| p.content_type.match(%r{text/html}) }.body
       end
       let(:body) { 'Link to the photo is: {{course_photo}}' }
       it { expect(subject.attachments.count).to eq 1 }

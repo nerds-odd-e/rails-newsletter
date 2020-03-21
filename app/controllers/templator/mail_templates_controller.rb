@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Templator::MailTemplatesController < ApplicationController
   layout 'templator/mail_templates'
-  before_action :set_newsletter, only: [:show, :edit, :update, :destroy]
+  before_action :set_newsletter, only: %i[show edit update destroy]
 
   respond_to :html
 
@@ -10,8 +12,7 @@ class Templator::MailTemplatesController < ApplicationController
   end
 
   # GET /mail_templates/1
-  def show
-  end
+  def show; end
 
   # GET /mail_templates/new
   def new
@@ -19,8 +20,7 @@ class Templator::MailTemplatesController < ApplicationController
   end
 
   # GET /mail_templates/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /mail_templates
   def create
