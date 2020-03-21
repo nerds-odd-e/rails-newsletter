@@ -32,7 +32,8 @@ module Templator
   RSpec.describe 'newsmailerized mail', type: :mailer do
     let(:body) { 'abc' }
     let(:mail_template) { FactoryGirl.build(:mail_template, body: body) }
-    let(:options) { {} }
+    let(:context) {}
+    let(:options) { { context: context } }
     let(:mail) { MailerForTest.test_mail(mail_template, options) }
     subject { mail }
 
@@ -45,7 +46,6 @@ module Templator
     end
 
     describe 'body' do
-      let(:options) { {} }
       let(:body) { @body }
       subject { mail.body.to_s }
 
@@ -81,7 +81,7 @@ module Templator
 
           describe 'when the object exist' do
             let(:the_object) { double }
-            let(:options) { { an_object: the_object } }
+            let(:context) { { an_object: the_object } }
             before { allow(the_object).to receive(:instance_method) { 'I am called' } }
 
             it { is_expected.to eq "I am called\n" }

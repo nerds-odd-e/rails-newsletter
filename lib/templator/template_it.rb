@@ -4,8 +4,8 @@ module Templator
   class TemplateIt
     include ActionView::Helpers::SanitizeHelper
 
-    def initialize(options)
-      @options = options
+    def initialize(context)
+      @context = context
     end
 
     def render(raw)
@@ -29,15 +29,15 @@ module Templator
     end
 
     def extract_content_from_context(content)
-      env = @options[:env]
+      env = @context[:env]
       return render(env.send(content)) if env&.respond_to? content
       return env.content_for(content) if env.try(:content_for?, content)
 
       if content =~ /(\w+)\.(\w+)/
         object = $LAST_MATCH_INFO[1].to_sym
         method = $LAST_MATCH_INFO[2]
-        if @options.include?($LAST_MATCH_INFO[1].to_sym)
-          return (@options[object].try(:decorate, context: {mailer: env}) || @options[object]).send(method)
+        if @context.include?($LAST_MATCH_INFO[1].to_sym)
+          return (@context[object].try(:decorate, context: {mailer: env}) || @context[object]).send(method)
         end
       end
       raise "**Missing content '{{#{content}}}'**"

@@ -32,13 +32,14 @@ module Templator
     end
 
     def mail_from_template(email, mail_template, options = {})
-      options.merge!(env: self)
+      context = options.delete(:context) || {}
+      context[:env] = self
       collecting_attachments do
-        mail_template.render_body(options)
+        mail_template.render_body(context)
       end
       mail(to: email,
-           subject: mail_template.render_subject(options), **options) do |format|
-             format.html { render(html: mail_template.render_body(options).html_safe, layout: true) }
+           subject: mail_template.render_subject(context), **options) do |format|
+             format.html { render(html: mail_template.render_body(context).html_safe, layout: true) }
            end
     end
 

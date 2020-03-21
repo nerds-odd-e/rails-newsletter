@@ -7,12 +7,12 @@ class Templator::MailTemplate < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   self.table_name = 'newsletter_mail_templates'
 
-  def render_subject(options)
-    Templator::TemplateIt.new(options).render(subject).strip
+  def render_subject(context)
+    Templator::TemplateIt.new(context).render(subject).strip
   end
 
-  def render_body(options)
-    Templator::TemplateIt.new(options).render(body)
+  def render_body(context)
+    Templator::TemplateIt.new(context).render(body)
   end
 
   def method_missing(method, *args, &block)
