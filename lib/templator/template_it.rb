@@ -37,7 +37,7 @@ module Templator
         object = $LAST_MATCH_INFO[1].to_sym
         method = $LAST_MATCH_INFO[2]
         if @options.include?($LAST_MATCH_INFO[1].to_sym)
-          return @options[object].send(method)
+          return (@options[object].try(:decorate, context: {mailer: env}) || @options[object]).send(method)
         end
       end
       raise "**Missing content '{{#{content}}}'**"
